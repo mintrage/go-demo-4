@@ -26,16 +26,25 @@ func (acc *account) generatePassword(n int) {
 	acc.password = string(res)
 }
 
+// 1. Если логина нет, то ошибка
+// 2. Если нет пароля, то генерим
 func newAccount(login, password, urlString string) (*account, error) {
+	if login == "" {
+		return nil, errors.New("INVALID_LOGIN")
+	}
 	_, err := url.ParseRequestURI(urlString)
 	if err != nil {
-		return nil, errors.New("INVALID URL")
+		return nil, errors.New("INVALID_URL")
 	}
-	return &account{
+	newAcc := &account{
 		login:    login,
 		password: password,
 		url:      urlString,
-	}, nil
+	}
+	if password == "" {
+		newAcc.generatePassword(12)
+	}
+	return newAcc, err
 
 }
 
@@ -49,10 +58,10 @@ func main() {
 
 	myAccount, err := newAccount(login, password, url)
 	if err != nil {
-		fmt.Println("Неверный формат URL")
+		fmt.Println("Неверный формат URL или логин")
 		return
 	}
-	myAccount.generatePassword(12)
+	// myAccount.generatePassword(12)
 	myAccount.outputPassword()
 
 	fmt.Println(myAccount)
@@ -63,7 +72,7 @@ func main() {
 func promptData(prompt string) string {
 	fmt.Print(prompt + ": ")
 	var res string
-	fmt.Scan(&res)
+	fmt.Scanln(&res)
 	return res
 }
 
