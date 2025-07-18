@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+type account struct {
+	login    string
+	password string
+	url      string
+}
+
 func main() {
 	login := promptData("Введите логин")
 	password := promptData("Введите пароль")
