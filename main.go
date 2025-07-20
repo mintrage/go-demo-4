@@ -31,7 +31,7 @@ func getMenu() int {
 	fmt.Println("2. Найти аккаунт")
 	fmt.Println("3. Удалить аккаунт")
 	fmt.Println("4. Выход")
-	fmt.Scan(&variant)
+	fmt.Scanln(&variant)
 	return variant
 }
 
@@ -47,18 +47,19 @@ func createAccount() {
 	login := promptData("Введите логин")
 	password := promptData("Введите пароль")
 	url := promptData("Введите URL")
-
 	myAccount, err := account.NewAccount(login, password, url)
 	if err != nil {
 		fmt.Println("Неверный формат URL или логин")
 		return
 	}
-	file, err := myAccount.ToBytes()
+	vault := account.NewVault()
+	vault.AddAccount(*myAccount)
+	data, err := vault.ToBytes()
 	if err != nil {
 		fmt.Println("Не удалось преобразовать в JSON")
 		return
 	}
-	files.WriteFile(file, "data.json")
+	files.WriteFile(data, "data.json")
 }
 
 func promptData(prompt string) string {
