@@ -2,7 +2,7 @@ package main
 
 import (
 	"demo/password/account"
-	"demo/password/cloud"
+	"demo/password/files"
 	"demo/password/output"
 	"fmt"
 
@@ -13,8 +13,8 @@ func main() {
 	output.PrintError(1)
 	output.PrintError("sd")
 	fmt.Println("___Менеджер паролей___")
-	//vault := account.NewVault(files.NewJsonDb("data.json"))
-	vault := account.NewVault(cloud.NewCloudDb("https://a.ru"))
+	vault := account.NewVault(files.NewJsonDb("data.json"))
+	//vault := account.NewVault(cloud.NewCloudDb("https://a.ru"))
 Menu:
 	for {
 		variant := getMenu()
