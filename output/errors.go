@@ -1,6 +1,8 @@
 package output
 
-import "github.com/fatih/color"
+import (
+	"github.com/fatih/color"
+)
 
 func PrintError(value any) {
 	intValue, ok := value.(int)
@@ -29,4 +31,8 @@ func PrintError(value any) {
 	// default:
 	// 	color.Red("Неизвестный тип ошибки")
 	// }
+}
+
+func sum[T int | float32 | float64 | int16 | int32 | string](a, b T) T {
+	return a + b
 }
