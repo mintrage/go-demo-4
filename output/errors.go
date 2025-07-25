@@ -33,6 +33,6 @@ func PrintError(value any) {
 	// }
 }
 
-func sum[T int | float32 | float64 | int16 | int32 | string](a, b T) T {
-	return a + b
-}
+// func sum[T int | float32 | float64 | int16 | int32](a, b T) T {
+// 	return a + b
+// }
