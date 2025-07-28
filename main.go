@@ -61,7 +61,9 @@ Menu:
 
 func findAccount(vault *account.VaultWithDb) {
 	url := promptData([]string{"Введите URL для поиска"})
-	accounts := vault.FindAccounts(url, checkUrl)
+	accounts := vault.FindAccounts(url, func(acc account.Account, str string) bool {
+		return strings.Contains(acc.Url, str)
+	})
 	if len(accounts) == 0 {
 		color.Red("Аккаунтов не найдено")
 	}
@@ -71,9 +73,9 @@ func findAccount(vault *account.VaultWithDb) {
 
 }
 
-func checkUrl(acc account.Account, str string) bool {
-	return strings.Contains(acc.Url, str)
-}
+// func checkUrl(acc account.Account, str string) bool {
+// 	return strings.Contains(acc.Url, str)
+// }
 
 func deleteAccount(vault *account.VaultWithDb) {
 	url := promptData([]string{"Введите URL для удаления"})
