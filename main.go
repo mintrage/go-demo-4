@@ -5,6 +5,7 @@ import (
 	"demo/password/files"
 	"demo/password/output"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/fatih/color"
@@ -38,6 +39,13 @@ func main() {
 	// output.PrintError(1)
 	// output.PrintError("sd")
 	fmt.Println("___Менеджер паролей___")
+	res := os.Getenv("VAR")
+	fmt.Println(res)
+
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		fmt.Println(pair[0])
+	}
 	vault := account.NewVault(files.NewJsonDb("data.json"))
 	counter := menuCounter()
 	counter2 := menuCounter()
