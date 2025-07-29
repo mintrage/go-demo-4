@@ -26,14 +26,26 @@ var menuVariants = []string{
 	"Выберите вариант",
 }
 
+func menuCounter() func() {
+	i := 0
+	return func() {
+		i++
+		fmt.Println(i)
+	}
+}
+
 func main() {
 	// output.PrintError(1)
 	// output.PrintError("sd")
 	fmt.Println("___Менеджер паролей___")
 	vault := account.NewVault(files.NewJsonDb("data.json"))
+	counter := menuCounter()
+	counter2 := menuCounter()
 	//vault := account.NewVault(cloud.NewCloudDb("https://a.ru"))
 Menu:
 	for {
+		counter()
+		counter2()
 		variant := promptData(menuVariants...)
 		menuFunc := menu[variant]
 		if menuFunc == nil {
